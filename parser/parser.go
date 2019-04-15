@@ -14,12 +14,17 @@ func processCsv(fileName string) {
 		panic(err)
 	}
 	r := csv.NewReader(bufio.NewReader(f))
+	i := 0
 	for {
 		row, error := r.Read()
 		if error == io.EOF {
 			break
 		}
-
+		if i == 1 {
+			fmt.Println(row[6])
+			break
+		}
+		i++
 	}
 }
 

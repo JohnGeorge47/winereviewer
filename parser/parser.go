@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"io"
 	"os"
+
+	"github.com/JohnGeorge47/winereviewer/parser/sqlCaller"
 )
 
 func processCsv(fileName string) {
@@ -14,17 +16,14 @@ func processCsv(fileName string) {
 		panic(err)
 	}
 	r := csv.NewReader(bufio.NewReader(f))
-	i := 0
 	for {
 		row, error := r.Read()
 		if error == io.EOF {
 			break
 		}
-		if i == 1 {
-			fmt.Println(row[6])
-			break
-		}
-		i++
+
+		fmt.Println(row)
+		sqlCaller.InsertIntoSql(row[1], row[2], row[3], row[5], row[11], row[13], row[9], row[10])
 	}
 }
 

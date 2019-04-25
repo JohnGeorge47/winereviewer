@@ -21,7 +21,6 @@ func processCsv(fileName string) {
 		if error == io.EOF {
 			break
 		}
-
 		fmt.Println(row)
 		sqlCaller.InsertIntoSql(row[1], row[2], row[3], row[5], row[11], row[13], row[9], row[10])
 	}

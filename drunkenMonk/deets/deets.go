@@ -26,20 +26,24 @@ func GetAllCountries() []string {
 	return countryList
 }
 
-func GetAllWines() []string {
-	var wine string
+func GetAllWines(limit int, offset string) []string {
+	if offset == "" {
+		offset = "0"
+	}
+	var title string
 	wineList := make([]string, 0)
+	// query := fmt.Sprintf("SELECT title from wineDetailscodecod")
 	db, err := sql.Open("mysql", "root:password@/winereviews?multiStatements=true")
 	defer db.Close()
 	checkError(err)
-	stmt, err := db.Prepare("SELECT DISTINCT title from wineDetails")
+	stmt, err := db.Prepare("SELECT title from wineDetails LIMIT ? OFFSET ?")
 	checkError(err)
-	rows, err := stmt.Query()
+	defer stmt.Close()
+	rows, err := stmt.Query(limit, offset)
 	defer rows.Close()
-	return wineList
 	for rows.Next() {
-		err = rows.Scan(&wine)
-		wineList = append(wineList, wine)
+		err = rows.Scan(&title)
+		wineList = append(wineList, title)
 		fmt.Println(wineList)
 	}
 	return wineList

@@ -40,7 +40,9 @@ func getCountries(c echo.Context) error {
 }
 
 func getAllWines(c echo.Context) error {
-	wines := deets.GetAllWines()
+	limit := 10
+	offset := c.QueryParam("offset")
+	wines := deets.GetAllWines(limit, offset)
 	u := &Wines{
 		Data: wines,
 	}

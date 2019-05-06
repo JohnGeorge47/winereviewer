@@ -16,3 +16,30 @@ CREATE TABLE reviewer (
                         taster_name VARCHAR(256),
                         PRIMARY KEY (id)
                         );
+
+
+ alter table `wineDetails`
+   modify column `title` varchar(256)
+   CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL ;
+
+    alter table `wineDetails`
+   modify column `winery` varchar(256)
+   CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL ;
+
+    alter table `wineDetails`
+   modify column `details` longtext
+   CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL ;
+
+       alter table `wineDetails`
+   modify column `designation` varchar(256)
+   CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL ;
+
+       alter table `wineDetails`
+   modify column `price` varchar(256)
+   CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL ;
+
+
+       alter table `wineDetails`
+   modify column `country` varchar(256)
+   CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL 
+   

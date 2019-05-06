@@ -49,6 +49,28 @@ func GetAllWines(limit int, offset string) []string {
 	return wineList
 }
 
+func GetWinesInCountry(country string, limit int, offset string) []string {
+	if offset == "" {
+		offset = "0"
+	}
+	wineList := make([]string, 0)
+	var title string
+	db, err := sql.Open("mysql", "root:password@/winereviews?multiStatements=true")
+	defer db.Close()
+	checkError(err)
+	stmt, err := db.Prepare("SELECT title from wineDetails WHERE country=? LIMIT ? OFFSET ?")
+	checkError(err)
+	defer stmt.Close()
+	rows, err := stmt.Query(country, limit, offset)
+	defer rows.Close()
+	for rows.Next() {
+		err = rows.Scan(&title)
+		wineList = append(wineList, title)
+		fmt.Println(wineList)
+	}
+	return wineList
+}
+
 func checkError(err error) {
 	if err != nil {
 		panic(err)

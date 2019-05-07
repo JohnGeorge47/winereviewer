@@ -26,6 +26,9 @@ type WineCountry struct {
 	Country string   `json:country`
 	Data    []string `json:data`
 }
+type WineCost struct {
+	Data deets.WinePriceList `json:Data`
+}
 
 func main() {
 	e := echo.New()
@@ -35,6 +38,7 @@ func main() {
 	e.GET("/countries", getCountries)
 	e.GET("/wine/:country", winesInACountry)
 	e.GET("/wines", getAllWines)
+	e.GET("/maxcost", maxPriceList)
 	e.Logger.Fatal(e.Start(":1323"))
 }
 
@@ -68,4 +72,14 @@ func winesInACountry(c echo.Context) error {
 		Data:    wines,
 	}
 	return c.JSON(http.StatusOK, u)
+}
+
+func maxPriceList(c echo.Context) error {
+	offset := c.QueryParam("offset")
+	wines := deets.Getmostexpensive(offset)
+	u := &WineCost{
+		Data: wines,
+	}
+	return c.JSON(http.StatusOK, u)
+
 }
